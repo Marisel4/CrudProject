@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <title>MAPENDO SARL</title>
+    <style>
+        .titre{
+            color: white;
+            margin: 0 auto;
+        }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-secondary">
+      <h1 class="titre">MAPENDO</h1>
+     </nav>
+    <div class="container mt-3">
+      <div class="card text-center">
+        <div class="card-header">
+          FORMULAIRE
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col">
+                <label for="nom">NOM</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="nom"
+                  id="nom"
+                />
+                <span class="error"></span>
+              </div>
+              <div class="col">
+                <label for="prenom">PRENOM</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="prenom"
+                  id="prenom"
+                />
+                <span class="error"></span>
+              </div>
+              <div class="col">
+                <label for="mail">MAIL</label>
+                <input
+                  type="mail"
+                  class="form-control"
+                  name="mail"
+                  id="mail"
+                />
+                <span class="error"></span>
+              </div>
+              <div class="col">
+                <label for="age">AGE</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="age"
+                  id="age"
+                />
+                <span class="error"></span>
+              </div>
+            </div><br/>
+            <div class="row">
+                <div class="col">
+                 <label for="poste">POSTE</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="poste"
+                    id="poste"
+                  />
+                  <span class="error"></span>
+                </div>
+                <div class="col">
+                  <label for="telephone">NUMERO DE TELEPHONE</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="telephone"
+                    id="telephone"
+                  />
+                  <span class="error"></span>
+                </div>
+                <div class="col">
+                  <label for="statut">STATUT MARITAL</label>
+                  <select name="statut" id="statut" class="form-control">
+                      <option value="true">OUI</option>
+                      <option value="false">NON</option>
+                  </select>
+                  <span class="error"></span>
+                </div>
+                <div class="col">
+                  <label for="pays">PAYS</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="pays"
+                    id="pays"
+                  />
+                  <span class="error"></span>
+                </div>             
+              </div><br/>
+              <div class="row">
+                  <div class="col">
+                    <button type="submit" class="btn btn-secondary center" id="btn">ENREGISTRER</button>
+                  </div>
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="card text-center mt-3">
+        <div class="card-header">
+          LISTE DES EMPLOYE(E)S DE MAPENDO
+        </div>
+        <div class="card-body">
+            <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col"># MATRICULE</th>
+                    <th scope="col">NOM</th>
+                    <th scope="col">PRENOM</th>
+                    <th scope="col">MAIL</th>
+                    <th scope="col">AGE</th>
+                    <th scope="col">POSTE</th>
+                    <th scope="col">NUMERO</th>
+                    <th scope="col">STATUT</th>
+                    <th scope="col">PAYS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+    <script src="crud.js"></script>
+  </body>
+</html>
