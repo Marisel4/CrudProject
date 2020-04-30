@@ -22,16 +22,17 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-secondary">
-      <h1 class="titre">MAPENDO</h1>
-     </nav>
-    <div class="container mt-3">
+    <nav class="navbar navbar-dark bg-dark">
+     <h1 class="titre">MAPENDO</h1>
+    </nav>
+    <div class="container-fluid mt-3">
       <div class="card text-center">
         <div class="card-header">
           FORMULAIRE
         </div>
         <div class="card-body">
-          <form method="post" onsubmit="event.preventDefault();onFormSubmit();">
+          <form autocomplete="on" id="form">
+            <input type="hidden" name="_id" id="_id" value="">
             <div class="row">
               <div class="col">
                 <label for="nom">NOM</label>
@@ -40,38 +41,49 @@
                   class="form-control"
                   name="nom"
                   id="nom"
+                  value=""
+                  required
                 />
+                <small id="nomError" class="error error-danger"></small>
               </div>
               <div class="col">
                 <label for="prenom">PRENOM</label>
                 <input
                   type="text"
                   class="form-control"
+                  placeholder="*Votre prénom"
                   name="prenom"
                   id="prenom"
+                  value=""
+                  required
                 />
+                <small id="prenomError" class="error error-danger"></small>
               </div>
               <div class="col">
-                <label for="mail">MAIL</label>
+                <label for="email">EMAIL</label>
                 <input
                   type="mail"
                   class="form-control"
-                  name="mail"
-                  id="mail"
-                />
-              </div>
-              <div class="col">
-                <label for="age">AGE</label>
-                <input
-                  type="number"
-                  class="form-control age"
-                  name="age"
-                  id="age"
+                  name="email"
+                  id="email"
+                  value=""
                 />
               </div>
             </div>
             <br />
             <div class="row">
+              <div class="col">
+                <label for="pays">PAYS</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pays"
+                  name="pays"
+                  value=""
+                  required
+                />
+                <small id="paysError" class="error error-danger"></small>
+              </div>
               <div class="col">
                 <label for="poste">POSTE</label>
                 <input
@@ -79,35 +91,34 @@
                   class="form-control"
                   name="poste"
                   id="poste"
+                  value=""
+                  required
                 />
-              </div>
+                <small id="posteError" class="error error-danger"></small>
+              </div> 
               <div class="col">
-                <label for="telephone">TELEPHONE</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="telephone"
-                  id="telephone"
-                />
-              </div>
-              <div class="col">
-                <label for="statut">STATUT MARITAL</label>
-                <select name="statut" id="statut" class="form-control">
-                  <option value="false">NON</option>
-                  <option value="true">OUI</option>
+                <label for="estMarie">STATUT MARITAL</label>
+                <select class="form-control" id="estMarie" name="estMarie" value="" required>
+                  <option value="true">Oui</option>
+                  <option value="false">Non</option>
                 </select>
-              </div>
-              <div class="col">
-                <label for="pays">PAYS</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="pays"
-                  id="pays"
-                />
-              </div>
+                <small id="estMarieError" class="error error-danger"></small>
+              </div>         
             </div>
             <br />
+            <div class="row">
+              <div class="col">
+                <label for="numeroTelephone"> TELEPHONE</label>
+                <input
+                type="text"
+                class="form-control"
+                name="numeroTelephone"
+                id="numeroTelephone"
+                value=""
+              />
+              </div>
+            </div>
+            <br/>
             <div class="row">
               <div class="col">
                 <button type="submit" class="btn btn-dark center" id="btn">
@@ -120,29 +131,29 @@
       </div>
       <div class="card text-center mt-3">
         <div class="card-header">
-          LISTE DES EMPLOYE(E)S DE MAPENDO
+          EMPLOYEES
         </div>
         <div class="card-body">
-            <table class="table table-dark" id="employeeList">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">NOM</th>
-                    <th scope="col">PRENOM</th>
-                    <th scope="col">MAIL</th>
-                    <th scope="col">AGE</th>
-                    <th scope="col">POSTE</th>
-                    <th scope="col">NUMERO</th>
-                    <th scope="col">STATUT MARITAL</th>
-                    <th scope="col">PAYS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+          <table class="table-dark" id="employeeList">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>NOM</th>
+                <th>PRENOM</th>
+                <th>EMAIL</th>
+                <th>POSTE</th>
+                <th>NUMERO DE TELEPHONE</th>
+                <th>MARIE</th>
+                <th>PAYS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="crud.js"></script>
   </body>
 </html>

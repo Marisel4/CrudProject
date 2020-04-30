@@ -1,161 +1,195 @@
 const nom = document.querySelector("#nom");
 const prenom = document.querySelector("#prenom");
-const mail = document.querySelector("#mail");
-const age = document.querySelector("#age");
+const email = document.querySelector("#email");
 const poste = document.querySelector("#poste");
-const telephone = document.querySelector("#telephone");
-const statut = document.querySelector("#statut");
+const estMarie = document.querySelector("#estMarie");
 const pays = document.querySelector("#pays");
+const numeroTelephone = document.querySelector('#numeroTelephone');
 
-const btn = document.querySelector("#btn");
-const table = document.querySelector("table");
-const tbody = document.querySelector("tbody");
+const tbody = document.querySelector('tbody');
+const btn = document.querySelector('#btn');
+const form = document.querySelector('#form');
 
-let selectedRow = null;
-
-function onFormSubmit() {
-      let formData = lireLesDonnees();
-      if (selectedRow == null){
-          insertNewRecord(formData);
-          nom.value = "";
-          prenom.value = "";
-          mail.value = "";
-          age.value = "";
-          poste.value = "";
-          telephone.value = "";
-          statut.value = "";
-          pays.value = "";
-          selectRow = null;
-      }else{
-         modifierEnregistrement(formData);
-         nom.value = "";
-         prenom.value = "";
-         mail.value = "";
-         age.value = "";
-         poste.value = "";
-         telephone.value = "";
-         statut.value = "";
-         pays.value = "";
-         selectRow = null;
-      }
-}
-
-function ajouterBaliseError(name) {
-  let span = document.createElement("span");
-    span.classList.add('span');
-    name.parentElement.appendChild(span);
-    span = document.querySelector('.span');
-    if(span.textContent === ""){
-        span.textContent = "Erreur";
-        span.classList.add('error');       
+toutLesEmployes();
+function toutLesEmployes(){
+  axios({
+    method:'get',
+    url: 'http://167.71.45.243:4000/api/employes?api_key=nljygze',
+  })
+  .then((response)=>{
+    for(let employe of response.data){
+      afficherSupprimerModifier(employe);
     }
+  })
+  .catch((error)=>{
+    console.log(error);
+  })
 }
-function lireLesDonnees() {
-  let formData = {};
-  formData["matricule"] = Math.round(Math.random() * 100);;
-  formData["nom"] = nom.value;
-  formData["prenom"] = prenom.value;
-  formData["mail"] = mail.value;
-  formData["age"] = age.value;
-  formData["poste"] = poste.value;
-  formData["telephone"] = telephone.value;
-  formData["statut"] = statut.value;
-  formData["pays"] = pays.value;
-  return formData;
-}
-function insertNewRecord(data){
-  if (nom.value === "") {
-    ajouterBaliseError(nom);
-  } else if (prenom.value === "") {    
-    ajouterBaliseError(prenom);
-  } else if (mail.value === "") {    
-    ajouterBaliseError(mail);
-  } else if (poste.value === "") {     
-    ajouterBaliseError(poste);
-  } else if (telephone.value === "") {     
-    ajouterBaliseError(telephone);
-  } else if (statut.value === "") {     
-    ajouterBaliseError(statut);
-  } else if (pays.value === "") {     
-    ajouterBaliseError(pays);
-  } else {
-    let table = document.getElementById("employeeList").getElementsByTagName('tbody')[0];
-    let newRow = table.insertRow(table.length);
-    cell1 = newRow.insertCell(0);
-    cell1.innerHTML = data.matricule;
-    cell2 = newRow.insertCell(1);
-    cell2.innerHTML = data.nom;
-    cell3 = newRow.insertCell(2);
-    cell3.innerHTML = data.prenom;
-    cell4 = newRow.insertCell(3);
-    cell4.innerHTML = data.mail;
-    cell5 = newRow.insertCell(4);
-    cell5.innerHTML = data.age;
-    cell6 = newRow.insertCell(5);
-    cell6.innerHTML = data.poste;
-    cell7 = newRow.insertCell(6);
-    cell7.innerHTML = data.telephone;
-    cell8 = newRow.insertCell(7);
-    cell8.innerHTML = data.statut;
-    cell9 = newRow.insertCell(8);
-    cell9.innerHTML = data.pays;
-    cell10 = newRow.insertCell(9);
-    cell10.innerHTML = `<a onClick="enregistrementAediter(this)" class="btn btn-primary">Edit</a>
-                       <a onClick="supprimerEnregistrement(this)" class="btn btn-danger">Delete</a>`;
-  }
-}
-function enregistrementAediter(td) {
+function afficherSupprimerModifier(employe){
+  let tr = `
+  <tr>
+    <td>${employe._id}</td>
+    <td>${employe.nom}</td>
+    <td>${employe.prenom}</td>
+    <td>${employe.email}</td>
+    <td>${employe.poste}</td>
+    <td>${employe.numeroTelephone}</td>
+    <td>${employe.estMarie ? "OUI" : "NOM"}</td>
+    <td>${employe.pays}</td>
+    <td>
+      <button class="btn btn-primary" id="edit-${
+        employe._id
+      }">Edit</button>
+      <button class="btn btn-danger" id="delete-${
+        employe._id
+      }">Delete</button>
+    </td>
+  </tr>
+  `;
+  tbody.insertAdjacentHTML("beforeend", tr);
+
+  const detete = document.getElementById(`delete-${employe._id}`);
+  const modifier = document.getElementById(`edit-${employe._id}`);
+  
+  //delete employe
+  detete.addEventListener("click", (event) => {
+    event.preventDefault();
+    tbody.innerHTML = "";
+    const confirmation = confirm("Tu es sur de supprimer cette enregistrement");
+    if (confirmation){
+      supprimerEmploye(employe)
+    }
+  });
+
+  //set employer values for update
+  modifier.addEventListener("click", (event) => {
+  event.preventDefault();
   btn.textContent = "Modifier";
-  selectedRow = td.parentElement.parentElement;
-  nom.value = selectedRow.cells[1].innerHTML;
-  prenom.value = selectedRow.cells[2].innerHTML;
-  mail.value = selectedRow.cells[3].innerHTML;
-  age.value = selectedRow.cells[4].innerHTML;
-  poste.value = selectedRow.cells[5].innerHTML;
-  telephone.value = selectedRow.cells[6].innerHTML;
-  statut.value = selectedRow.cells[7].innerHTML;
-  pays.value = selectedRow.cells[8].innerHTML;
-}
-function modifierEnregistrement(formData) {
-  if (nom.value === "") {
-    ajouterBaliseError(nom);
-  } else if (prenom.value === "") {    
-    ajouterBaliseError(prenom);
-  } else if (mail.value === "") {    
-    ajouterBaliseError(mail);
-  } else if (poste.value === "") {     
-    ajouterBaliseError(poste);
-  } else if (telephone.value === "") {     
-    ajouterBaliseError(telephone);
-  } else if (statut.value === "") {     
-    ajouterBaliseError(statut);
-  } else if (pays.value === "") {     
-    ajouterBaliseError(pays);
-  } else {
-    selectedRow.cells[1].innerHTML = formData.nom;
-    selectedRow.cells[2].innerHTML = formData.prenom;
-    selectedRow.cells[3].innerHTML = formData.mail;
-    selectedRow.cells[4].innerHTML = formData.age;
-    selectedRow.cells[5].innerHTML = formData.poste;
-    selectedRow.cells[6].innerHTML = formData.telephone;
-    selectedRow.cells[7].innerHTML = formData.statut;
-    selectedRow.cells[8].innerHTML = formData.pays;
-  }  
+  preRemplirChamps(employe);
+  });
+ 
 }
 
-function supprimerEnregistrement(td) {
-  if (confirm('Supprimer ?')) {
-      row = td.parentElement.parentElement;
-      document.getElementById("employeeList").deleteRow(row.rowIndex);
+  //ajouter et supprimer 
+  btn.addEventListener('click',(event)=>{
+    event.preventDefault();
+    tbody.innerHTML = "";
+    event.preventDefault();
+    if(validerFormulaire(form)){
+      if(btn.textContent === "Modifier"){
+        event.preventDefault();
+        modifierEmploye(document.querySelector('#_id').value);
+      }else{
+        addEmploye();
+      }
+    }
+  });
+
+ function addEmploye(){
+    axios({
+      method:'post',
+      url: 'http://167.71.45.243:4000/api/employes?api_key=nljygze',
+      data: {
+        nom: nom.value,
+        prenom: prenom.value,
+        estMarie: estMarie.value,
+        pays: pays.value,
+        email: email.value,
+        poste: poste.value,
+        numeroTelephone: numeroTelephone.value
+      }
+    })
+    .then((response)=>{
+      tbody.innerHTML = " ";
+      alert("L'employé ajouté avec succèss");
+      toutLesEmployes();
       nom.value = "";
       prenom.value = "";
-      mail.value = "";
-      age.value = "";
+      email.value = "";
       poste.value = "";
-      telephone.value = "";
-      statut.value = "";
+      estMarie.value = "";
       pays.value = "";
-      selectRow = null;
+      numeroTelephone.value = "";
+    })
+    .catch((error)=>{
+      alert('Une erreur est survenue');
+      console.log(error.response);
+    })
+ }
+
+ function supprimerEmploye(employe){
+  axios
+  .delete(
+    `http://167.71.45.243:4000/api/employes/${employe._id}?api_key=nljygze`
+  )
+  .then((res) => {
+    console.log(res.data);
+    alert('Suppression reussit avec succes');
+    toutLesEmployes();
+  })
+  .catch((err) => {
+    console.error(err);
+    alert('Echec de supprimer');
+  });
+ }
+
+ function preRemplirChamps(employe){
+  _id.value = employe._id;
+  nom.value = employe.nom;
+  prenom.value = employe.prenom;
+  email.value = employe.email;
+  estMarie.value = employe.estMarie;
+  poste.value = employe.poste;
+  pays.value = employe.pays;
+  numeroTelephone.value = employe.numeroTelephone;
+ }
+ 
+ //modifier
+function modifierEmploye(employeId){
+  axios({
+    method:'put',
+    url: `http://167.71.45.243:4000/api/employes/${employeId}?api_key=nljygze`,
+    data: {
+      nom: nom.value,
+      prenom: prenom.value,
+      estMarie: estMarie.value,
+      pays: pays.value,
+      email: email.value,
+      poste: poste.value,
+      numeroTelephone: numeroTelephone.value
+    }
+  })
+  .then((response)=>{
+    alert("Modification reussit");
+    toutLesEmployes();
+      nom.value = "";
+      prenom.value = "";
+      email.value = "";
+      poste.value = "";
+      estMarie.value = "";
+      pays.value = "";
+      numeroTelephone.value = "";
+      btn.textContent = "Ajouter"
+  })
+  .catch((error)=>{
+    alert('Echec de modification');
+    console.log(error.response);
+  })
+}
+
+function validerFormulaire(form) {
+  let error;
+  for (let input of form) {
+    if (input.required) {
+      error = document.getElementById(`${input.name}Error`);
+      if (input.value === "") {
+        error.textContent = `Le "${input.name}" est obligatoire`;
+         return toutLesEmployes();
+      } else {
+        error.textContent = "";
+      }
+    }
   }
+  return error.textContent === "" ? true : false;
 }
 
