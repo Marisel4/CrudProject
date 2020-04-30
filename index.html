@@ -31,7 +31,7 @@
           FORMULAIRE
         </div>
         <div class="card-body">
-          <form>
+          <form method="post" onsubmit="event.preventDefault();onFormSubmit();">
             <div class="row">
               <div class="col">
                 <label for="nom">NOM</label>
@@ -41,7 +41,6 @@
                   name="nom"
                   id="nom"
                 />
-                <span class="error"></span>
               </div>
               <div class="col">
                 <label for="prenom">PRENOM</label>
@@ -51,7 +50,6 @@
                   name="prenom"
                   id="prenom"
                 />
-                <span class="error"></span>
               </div>
               <div class="col">
                 <label for="mail">MAIL</label>
@@ -61,64 +59,62 @@
                   name="mail"
                   id="mail"
                 />
-                <span class="error"></span>
               </div>
               <div class="col">
                 <label for="age">AGE</label>
                 <input
                   type="number"
-                  class="form-control"
+                  class="form-control age"
                   name="age"
                   id="age"
                 />
-                <span class="error"></span>
               </div>
-            </div><br/>
+            </div>
+            <br />
             <div class="row">
-                <div class="col">
-                 <label for="poste">POSTE</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="poste"
-                    id="poste"
-                  />
-                  <span class="error"></span>
-                </div>
-                <div class="col">
-                  <label for="telephone">NUMERO DE TELEPHONE</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="telephone"
-                    id="telephone"
-                  />
-                  <span class="error"></span>
-                </div>
-                <div class="col">
-                  <label for="statut">STATUT MARITAL</label>
-                  <select name="statut" id="statut" class="form-control">
-                      <option value="true">OUI</option>
-                      <option value="false">NON</option>
-                  </select>
-                  <span class="error"></span>
-                </div>
-                <div class="col">
-                  <label for="pays">PAYS</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="pays"
-                    id="pays"
-                  />
-                  <span class="error"></span>
-                </div>             
-              </div><br/>
-              <div class="row">
-                  <div class="col">
-                    <button type="submit" class="btn btn-secondary center" id="btn">ENREGISTRER</button>
-                  </div>
+              <div class="col">
+                <label for="poste">POSTE</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="poste"
+                  id="poste"
+                />
               </div>
+              <div class="col">
+                <label for="telephone">TELEPHONE</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="telephone"
+                  id="telephone"
+                />
+              </div>
+              <div class="col">
+                <label for="statut">STATUT MARITAL</label>
+                <select name="statut" id="statut" class="form-control">
+                  <option value="false">NON</option>
+                  <option value="true">OUI</option>
+                </select>
+              </div>
+              <div class="col">
+                <label for="pays">PAYS</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="pays"
+                  id="pays"
+                />
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col">
+                <button type="submit" class="btn btn-dark center" id="btn">
+                  Ajouter
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -127,10 +123,10 @@
           LISTE DES EMPLOYE(E)S DE MAPENDO
         </div>
         <div class="card-body">
-            <table class="table table-dark">
+            <table class="table table-dark" id="employeeList">
                 <thead>
                   <tr>
-                    <th scope="col"># MATRICULE</th>
+                    <th scope="col">#</th>
                     <th scope="col">NOM</th>
                     <th scope="col">PRENOM</th>
                     <th scope="col">MAIL</th>
