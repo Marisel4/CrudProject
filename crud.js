@@ -13,8 +13,7 @@ const tbody = document.querySelector('tbody');
 
 const employees = [];
 
-btn.addEventListener('click', ajouterEmploye);
-
+btn.addEventListener('click', ajouterEmploye);gi
 function ajouterEmploye(){
     tbody.innerHTML= '';
     event.preventDefault();
